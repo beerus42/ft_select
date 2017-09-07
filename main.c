@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 01:09:49 by liton             #+#    #+#             */
-/*   Updated: 2017/09/07 03:59:49 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/07 04:11:02 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int              main(int ac, char **av, char **env)
 	(void)env;
 	(void)ac;
 	(void)av;
+	int	k = 1;
   if ((name_term = getenv("TERM")) == NULL)
      return (-1);
   if (tgetent(NULL, name_term) != 1)
@@ -66,16 +67,19 @@ int              main(int ac, char **av, char **env)
 	// On applique les changements :
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
 		return (-1);
-	res = tgoto(tgetstr("cm", NULL), 10, 3);
+	res = tgetstr("cm", NULL);
 	while (42)
 	{
 		i = 0;
+		k = 3;
 		tputs(tgetstr("cl", NULL), 1, &my_putchar);
 		sleep(3);
-		tputs(res, 1, &my_putchar);
 		while(av[i])
 		{
+			tputs(tgoto(res, 10, k), 1, &my_putchar);
+			sleep(3);
 			ft_putendl_fd(av[i++], 1);
+			k++;
 		}
 		sleep(3);
 	}
