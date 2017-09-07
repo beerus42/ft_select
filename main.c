@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 01:09:49 by liton             #+#    #+#             */
-/*   Updated: 2017/09/07 02:32:44 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/07 03:59:49 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,18 @@ int              main(int ac, char **av, char **env)
 	// On applique les changements :
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
 		return (-1);
-	res = tgetstr("Xh", NULL);
+	res = tgoto(tgetstr("cm", NULL), 10, 3);
 	while (42)
 	{
 		i = 0;
 		tputs(tgetstr("cl", NULL), 1, &my_putchar);
+		sleep(3);
 		tputs(res, 1, &my_putchar);
 		while(av[i])
+		{
 			ft_putendl_fd(av[i++], 1);
-		sleep(5);
-		voir_touche();
+		}
+		sleep(3);
 	}
 }
 
