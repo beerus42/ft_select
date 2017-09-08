@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/08 04:02:24 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/08 20:00:32 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,48 @@ static void			name_size_max(t_files *file, t_format *fmt)
 		if (file->first == 1)
 			exit = 0;
 	}
-	++fmt->len_max;
-}
-
-static void			my_strcpy(char *dest, char *src)
-{
-	int		i;
-
-	i = -1;
-	while (src[++i])
-		dest[i] = src[i];
+	fmt->len_max += 3;
 }
 
 static void			nb_space(t_files *file, t_format *fmt, char *name)
 {
-	ft_memset(name, ' ', (fmt->len_max - 1));
-	name[fmt->len_max - 1] = '\0';
-	my_strcpy(name, file->name);
+	int		i;
+
+	i = -1;
+	ft_memset(name, ' ', fmt->len_max);
+	name[fmt->len_max] = '\0';
+	while (file->name[++i])
+		name[i] = file->name[i];
 }
 
-static void			print_files(t_files *file, t_format *fmt)
+static void			print_name(char *name, t_files *file, t_op *op)
+{
+	if (file->reverse == 1)
+		tputs(op->reverse_on, 0, my_putchar);
+	ft_putchar_fd('[', 1);
+	if (file->cursor == 1)
+		tputs(op->under_on, 0, my_putchar);
+	ft_putstr_fd(name, 1);
+	if (file->cursor == 1)
+		tputs(op->under_off, 0, my_putchar);
+	ft_putchar_fd(']', 1);
+	if (file->reverse == 1)
+		tputs(op->reverse_off, 0, my_putchar);
+}
+
+static void			print_files(t_files *file, t_format *fmt, t_op *op)
 {
 	int		count;
-	char	name[fmt->len_max];
+	char	name[fmt->len_max + 1];
 	int		exit;
 
 	exit = 1;
 	count = 0;
+	(void)op;
 	while (file && exit != 0)
 	{
 		nb_space(file, fmt, name);
-		ft_putstr_fd(name, 1);
+		print_name(name, file, op);
 		ft_putchar_fd(' ', 1);
 		count++;
 		if (count == fmt->count)
@@ -78,7 +89,7 @@ static void			print_files(t_files *file, t_format *fmt)
 		ft_putchar_fd('\n', 1);
 }
 
-void				formatting(t_files *file)
+void				formatting(t_files *file, t_op *op)
 {
 	t_format			*fmt;
 	struct winsize		argp;
@@ -90,9 +101,9 @@ void				formatting(t_files *file)
 	ioctl(1, TIOCGWINSZ, &argp);
 	fmt->count = argp.ws_col / fmt->len_max;
 	fmt->row = fmt->nb_list / fmt->count;
+	fmt->len_max -= 3;
 	if (fmt->nb_list % fmt->count)
 		++fmt->row;
-	printf("%i\n", fmt->row);
-	print_files(file, fmt);
+	print_files(file, fmt, op);
 	free(fmt);
 }

@@ -6,7 +6,7 @@
 #*   By: beerus <bckeur@free.exe>                   +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/10/06 23:08:58 by beerus            #+#    #+#             *#
-#*   Updated: 2017/09/07 00:09:46 by liton            ###   ########.fr       *#
+#*   Updated: 2017/09/08 18:41:02 by liton            ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -80,6 +80,7 @@ SRC_NAME = ft_memset.c 	        \
 		   ft_atoll.c     		\
 		   ft_strjoinfree.c     \
 		   get_next_line.c      \
+		   my_putchar.c         \
 		   ft_split_whitespaces.c \
 		   ft_lstadd_wiw.c
 

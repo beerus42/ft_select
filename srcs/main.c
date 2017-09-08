@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:47:04 by liton             #+#    #+#             */
-/*   Updated: 2017/09/08 03:09:58 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/08 21:06:19 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		shell_on(void)
 	return (0);
 }
 
-int		shell_off(void)
+static int		shell_off(void)
 {
 	struct termios		term;
 
@@ -39,68 +39,54 @@ int		shell_off(void)
 	return(0);
 }
 
-t_files		*create_files(t_files *file, char *name)
+static t_op		*init_op(void)
 {
-	t_files		*new;
+	t_op	*op;
 
-	if (!(new = (t_files*)malloc(sizeof(t_files))))
+	if (!(op = (t_op*)malloc(sizeof(t_op))))
 		return (NULL);
-	if (file == NULL)
-	{
-		new->name = ft_strdup(name);
-		new->first = 1;
-	}
-	else
-	{
-		new->first = 0;
-		new->name = ft_strdup(name);
-		new->prev = file;
-		new->prev->next = new;
-	}
-	return (new);
+	if ((op->clear = tgetstr("cl", NULL)) == NULL)
+		return (NULL);
+	if ((op->under_on = tgetstr("us", NULL)) == NULL)
+		return (NULL);
+	if ((op->under_off = tgetstr("ue", NULL)) == NULL)
+		return (NULL);
+	if ((op->reverse_on = tgetstr("mr", NULL)) == NULL)
+		return (NULL);
+	if ((op->reverse_off = tgetstr("me", NULL)) == NULL)
+		return (NULL);
+	return (op);
 }
 
-t_files		*parsing(char **av)
+static void		ft_select(t_files *file, t_op *op)
 {
-	int			i;
-	t_files		*file;
-	t_files		*first;
+	t_files		*begin;
 
-	i = 0;
-	file = NULL;
-	while (av[++i])
+	begin = file;
+	while (42)
 	{
-		file = create_files(file, av[i]);
-		if (i == 1)
-			first = file;
+		tputs(op->clear, 0, my_putchar);
+		formatting(begin, op);
+		read_buff(&file, &begin);
 	}
-	file->next = first;
-	first->prev = file;
-	file = file->next;
-	return (file);
 }
 
-int			my_putchar(int c)
-{
-	write(1, &c, 1);
-	return (0);
-}
-
-int			main(int ac, char **av, char **env)
+int				main(int ac, char **av, char **env)
 {
 	t_files				*file;
 	char				*term_name;
-	char				*res;
+	t_op				*op;
 
 	(void)av;
 	(void)env;
-	if (ac < 2 || (term_name = getenv("TERM")) == NULL)
+	if (!*env ||ac < 2 || (term_name = getenv("TERM")) == NULL)
 		return (-1);
 	if (tgetent(NULL, term_name) <= 0)
 		return (-1);
+	if ((op = init_op()) == NULL)
+		return (-1);
 	file = parsing(av);
-	if ((res = tgetstr("cl", NULL)) == NULL)
-    	return (-1);
-	tputs(res, 0, my_putchar);
-	formatting(file);
+	formatting(file, op);
+	shell_off();
+	ft_select(file, op);
 }

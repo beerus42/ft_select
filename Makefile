@@ -6,7 +6,7 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/14 20:24:52 by liton             #+#    #+#              #
-#*   Updated: 2017/09/08 00:52:49 by liton            ###   ########.fr       *#
+#*   Updated: 2017/09/08 18:42:51 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ LIBSRC  = 	libft/
 SRCDIR  = 	srcs/
 OBJDIR  = 	objs/
 SRC	=		formatting.c		\
+			parsing.c			\
+			read.c				\
 			main.c
 # colors
 GRN     =   \033[0;32m

@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/08 03:59:40 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/08 21:08:39 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,21 @@
 # include "../libft/libft.h"
 # include <sys/ioctl.h>
 
+typedef struct		s_op
+{
+	char			*reverse_on;
+	char			*reverse_off;
+	char			*clear;
+	char			*under_on;
+	char			*under_off;
+}					t_op;
+
 typedef struct		s_files
 {
 	int				first;
 	char			*name;
+	int				cursor;
+	int				reverse;
 	struct s_files	*prev;
 	struct s_files	*next;
 }					t_files;
@@ -38,6 +49,10 @@ typedef struct		s_format
 	int				len_max;
 }					t_format;
 
-void				formatting(t_files *file);
+void				formatting(t_files *file, t_op *op);
+int					my_putchar(int c);
+t_files				*parsing(char **av);
+void				read_buff(t_files **file, t_files **begin);
+void				delete_file(t_files **file, t_files **begin);
 
 #endif
