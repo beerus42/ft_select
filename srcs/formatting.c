@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/08 03:09:13 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/08 04:02:24 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void			name_size_max(t_files *file, t_format *fmt)
 
 	exit = 1;
 	save = 0;
-	fmt->save = 0;
 	fmt->count = 0;
 	fmt->row = 0;
 	fmt->nb_list = 0;
@@ -33,7 +32,6 @@ static void			name_size_max(t_files *file, t_format *fmt)
 		if (file->first == 1)
 			exit = 0;
 	}
-	fmt->save = fmt->len_max;
 	++fmt->len_max;
 }
 
@@ -48,15 +46,15 @@ static void			my_strcpy(char *dest, char *src)
 
 static void			nb_space(t_files *file, t_format *fmt, char *name)
 {
-	ft_memset(name, ' ', fmt->save);
-	name[fmt->save] = '\0';
+	ft_memset(name, ' ', (fmt->len_max - 1));
+	name[fmt->len_max - 1] = '\0';
 	my_strcpy(name, file->name);
 }
 
 static void			print_files(t_files *file, t_format *fmt)
 {
 	int		count;
-	char	name[fmt->save + 1];
+	char	name[fmt->len_max];
 	int		exit;
 
 	exit = 1;
@@ -77,7 +75,7 @@ static void			print_files(t_files *file, t_format *fmt)
 			exit = 0;
 	}
 	if (count != fmt->count && count != 0)
-		ft_putchar('\n');
+		ft_putchar_fd('\n', 1);
 }
 
 void				formatting(t_files *file)
@@ -94,6 +92,7 @@ void				formatting(t_files *file)
 	fmt->row = fmt->nb_list / fmt->count;
 	if (fmt->nb_list % fmt->count)
 		++fmt->row;
+	printf("%i\n", fmt->row);
 	print_files(file, fmt);
 	free(fmt);
 }

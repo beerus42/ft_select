@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/08 02:17:01 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/08 03:59:40 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct		s_format
 	int				row;
 	int				count;
 	int				nb_list;
-	int				save;
 	int				len_max;
 }					t_format;
 
