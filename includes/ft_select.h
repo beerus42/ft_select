@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/09 03:56:19 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/09 22:01:13 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 typedef struct		s_op
 {
+	char			*cm;
 	char			*reverse_on;
 	char			*reverse_off;
 	char			*clear;
@@ -43,17 +44,19 @@ typedef struct		s_files
 
 typedef struct		s_format
 {
-	int				color;
 	int				row;
 	int				count;
 	int				nb_list;
+	int				nbl_save;
 	int				len_max;
+	int				word_max;
 }					t_format;
 
-void				formatting(t_files *file, t_op *op);
+int					formatting(t_files *file, t_op *op, t_format *fmt);
 int					my_putchar(int c);
 t_files				*parsing(char **av);
-void				read_buff(t_files **file, t_files **begin);
+void				read_buff(t_files **file, t_files **begin, int count);
 void				delete_file(t_files **file, t_files **begin);
+t_format			*name_size(t_files *file);
 
 #endif

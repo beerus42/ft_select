@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:33:33 by liton             #+#    #+#             */
-/*   Updated: 2017/09/09 03:38:37 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/09 22:09:21 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,55 @@ static void		delete_mode(t_files **file, t_files **begin)
 	t_files		*tmp;
 
 	tmp = *file;
-	(*file)->next->cursor = 1;
-	*file = (*file)->next;
+	if ((*file)->next->first != 1)
+		*file = (*file)->next;
+	else
+		*file = (*file)->prev;
+	(*file)->cursor = 1;
 	delete_file(&tmp, begin);
 }
 
-void			read_buff(t_files **file, t_files **begin)
+static void		up(t_files **file, int count)
+{
+	t_files		*tmp;
+	int			cnt;
+
+	if ((*file)->first == 1)
+		return ;
+	cnt = 0;
+	tmp = *file;
+	while (cnt < count)
+	{
+		if (tmp->first == 1)
+			return ;
+		tmp = tmp->prev;
+		++cnt;
+	}
+	(*file)->cursor = 0;
+	*file = tmp;
+	(*file)->cursor = 1;
+}
+
+static void		down(t_files **file, int count)
+{
+	t_files		*tmp;
+	int			cnt;
+
+	cnt = 0;
+	tmp = *file;
+	while (cnt < count)
+	{
+		tmp = tmp->next;
+		++cnt;
+		if (tmp->first == 1)
+			return ;
+	}
+	(*file)->cursor = 0;
+	*file = tmp;
+	(*file)->cursor = 1;
+}
+
+void			read_buff(t_files **file, t_files **begin, int count)
 {
 	char	buff[3 + 1];
 
@@ -61,4 +104,8 @@ void			read_buff(t_files **file, t_files **begin)
 		select_mode(file);
 	else if (buff[0] == 127)
 		delete_mode(file, begin);
+	else if (buff[2] == 65)
+		up(file, count);
+	else if (buff[2] == 66)
+		down(file, count);
 }

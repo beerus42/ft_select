@@ -22,6 +22,7 @@ OBJDIR  = 	objs/
 SRC	=		formatting.c		\
 			parsing.c			\
 			read.c				\
+			name_size.c      	\
 			main.c
 # colors
 GRN     =   \033[0;32m

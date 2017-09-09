@@ -6,50 +6,25 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/09 04:26:53 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/09 22:00:59 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static void			my_color(t_format *fmt)
+static void			nb_list(t_files *file, t_format *fmt)
 {
-	if (fmt->color == 0)
-		ft_putstr_fd("\033[0m", 1);
-	else if (fmt->color == 1)
-		ft_putstr_fd("\033[1;32m", 1);
-	else if (fmt->color == 2)
-		ft_putstr_fd("\033[0;32m", 1);
-	else if (fmt->color == 3)
-		ft_putstr_fd("\033[0;38m", 1);
-	else if (fmt->color == 4)
-		ft_putstr_fd("\033[1;34m", 1);
-	if (fmt->color == 4)
-		fmt->color = 0;
-}
-
-static void			name_size_max(t_files *file, t_format *fmt)
-{
-	int		save;
 	int		exit;
 
 	exit = 1;
-	save = 0;
-	fmt->count = 0;
-	fmt->row = 0;
 	fmt->nb_list = 0;
-	fmt->len_max = 0;
-	fmt->color = 0;
 	while (file && exit != 0)
 	{
 		++fmt->nb_list;
-		if ((save = ft_strlen(file->name)) > fmt->len_max)
-			fmt->len_max = save;
 		file = file->next;
 		if (file->first == 1)
 			exit = 0;
 	}
-	fmt->len_max += 3;
 }
 
 static void			nb_space(t_files *file, t_format *fmt, char *name)
@@ -57,15 +32,14 @@ static void			nb_space(t_files *file, t_format *fmt, char *name)
 	int		i;
 
 	i = -1;
-	ft_memset(name, ' ', fmt->len_max);
-	name[fmt->len_max] = '\0';
+	ft_memset(name, ' ', fmt->word_max);
+	name[fmt->word_max] = '\0';
 	while (file->name[++i])
 		name[i] = file->name[i];
 }
 
-static void			print_name(char *name, t_files *file, t_op *op, t_format *fmt)
+static void			print_name(char *name, t_files *file, t_op *op)
 {
-	my_color(fmt);
 	if (file->reverse == 1)
 		tputs(op->reverse_on, 0, my_putchar);
 	ft_putchar_fd('[', 1);
@@ -82,17 +56,18 @@ static void			print_name(char *name, t_files *file, t_op *op, t_format *fmt)
 
 static void			print_files(t_files *file, t_format *fmt, t_op *op)
 {
+	int		i;
 	int		count;
-	char	name[fmt->len_max + 1];
+	char	name[fmt->word_max + 1];
 	int		exit;
 
 	exit = 1;
 	count = 0;
+	i = -1;
 	while (file && exit != 0)
 	{
 		nb_space(file, fmt, name);
-		print_name(name, file, op, fmt);
-		++fmt->color;
+		print_name(name, file, op);
 		ft_putchar_fd(' ', 1);
 		++count;
 		if (count == fmt->count)
@@ -104,25 +79,26 @@ static void			print_files(t_files *file, t_format *fmt, t_op *op)
 		if (file->first == 1)
 			exit = 0;
 	}
+	if (fmt->nbl_save != fmt->nb_list)
+	{
+		while (++i < fmt->len_max)
+			ft_putchar_fd(' ', 1);
+		fmt->nbl_save = fmt->nb_list;
+	}
 	if (count != fmt->count && count != 0)
 		ft_putchar_fd('\n', 1);
 }
 
-void				formatting(t_files *file, t_op *op)
+int					formatting(t_files *file, t_op *op, t_format *fmt)
 {
-	t_format			*fmt;
 	struct winsize		argp;
 
-	fmt = NULL;
-	if (!(fmt = (t_format*)malloc(sizeof(t_format))))
-		return ;
-	name_size_max(file, fmt);
 	ioctl(1, TIOCGWINSZ, &argp);
+	nb_list(file, fmt);
 	fmt->count = argp.ws_col / fmt->len_max;
 	fmt->row = fmt->nb_list / fmt->count;
-	fmt->len_max -= 3;
 	if (fmt->nb_list % fmt->count)
 		++fmt->row;
 	print_files(file, fmt, op);
-	free(fmt);
+	return (fmt->count);
 }

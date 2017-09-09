@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:47:04 by liton             #+#    #+#             */
-/*   Updated: 2017/09/08 21:06:19 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/09 21:56:18 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,29 @@ static t_op		*init_op(void)
 		return (NULL);
 	if ((op->reverse_off = tgetstr("me", NULL)) == NULL)
 		return (NULL);
+	if ((op->cm = tgetstr("cm", NULL)) == NULL)
+		return (NULL);
 	return (op);
 }
 
-static void		ft_select(t_files *file, t_op *op)
+static void		ft_select(t_files *file, t_op *op, t_format *fmt)
 {
+	int			count;
 	t_files		*begin;
 
 	begin = file;
+	tputs(op->clear, 0, my_putchar);
 	while (42)
 	{
-		tputs(op->clear, 0, my_putchar);
-		formatting(begin, op);
-		read_buff(&file, &begin);
+		tputs(tgoto(op->cm, 0, 0), 0, my_putchar);
+		count = formatting(begin, op, fmt);
+		read_buff(&file, &begin, count);
 	}
 }
 
 int				main(int ac, char **av, char **env)
 {
+	t_format			*fmt;
 	t_files				*file;
 	char				*term_name;
 	t_op				*op;
@@ -86,7 +91,7 @@ int				main(int ac, char **av, char **env)
 	if ((op = init_op()) == NULL)
 		return (-1);
 	file = parsing(av);
-	formatting(file, op);
+	fmt = name_size(file);
 	shell_off();
-	ft_select(file, op);
+	ft_select(file, op, fmt);
 }
