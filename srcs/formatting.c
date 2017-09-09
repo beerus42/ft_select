@@ -6,11 +6,27 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/09 03:34:56 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/09 04:26:53 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+static void			my_color(t_format *fmt)
+{
+	if (fmt->color == 0)
+		ft_putstr_fd("\033[0m", 1);
+	else if (fmt->color == 1)
+		ft_putstr_fd("\033[1;32m", 1);
+	else if (fmt->color == 2)
+		ft_putstr_fd("\033[0;32m", 1);
+	else if (fmt->color == 3)
+		ft_putstr_fd("\033[0;38m", 1);
+	else if (fmt->color == 4)
+		ft_putstr_fd("\033[1;34m", 1);
+	if (fmt->color == 4)
+		fmt->color = 0;
+}
 
 static void			name_size_max(t_files *file, t_format *fmt)
 {
@@ -23,6 +39,7 @@ static void			name_size_max(t_files *file, t_format *fmt)
 	fmt->row = 0;
 	fmt->nb_list = 0;
 	fmt->len_max = 0;
+	fmt->color = 0;
 	while (file && exit != 0)
 	{
 		++fmt->nb_list;
@@ -46,8 +63,9 @@ static void			nb_space(t_files *file, t_format *fmt, char *name)
 		name[i] = file->name[i];
 }
 
-static void			print_name(char *name, t_files *file, t_op *op)
+static void			print_name(char *name, t_files *file, t_op *op, t_format *fmt)
 {
+	my_color(fmt);
 	if (file->reverse == 1)
 		tputs(op->reverse_on, 0, my_putchar);
 	ft_putchar_fd('[', 1);
@@ -59,6 +77,7 @@ static void			print_name(char *name, t_files *file, t_op *op)
 	ft_putchar_fd(']', 1);
 	if (file->reverse == 1)
 		tputs(op->reverse_off, 0, my_putchar);
+
 }
 
 static void			print_files(t_files *file, t_format *fmt, t_op *op)
@@ -69,13 +88,13 @@ static void			print_files(t_files *file, t_format *fmt, t_op *op)
 
 	exit = 1;
 	count = 0;
-	(void)op;
 	while (file && exit != 0)
 	{
 		nb_space(file, fmt, name);
-		print_name(name, file, op);
+		print_name(name, file, op, fmt);
+		++fmt->color;
 		ft_putchar_fd(' ', 1);
-		count++;
+		++count;
 		if (count == fmt->count)
 		{
 			ft_putchar_fd('\n', 1);

@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/08 21:08:39 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/09 03:56:19 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct		s_files
 
 typedef struct		s_format
 {
+	int				color;
 	int				row;
 	int				count;
 	int				nb_list;
