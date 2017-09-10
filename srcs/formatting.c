@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/09 22:00:59 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/11 01:27:01 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void			print_files(t_files *file, t_format *fmt, t_op *op)
 		ft_putchar_fd('\n', 1);
 }
 
-int					formatting(t_files *file, t_op *op, t_format *fmt)
+void				formatting(t_files *file, t_op *op, t_format *fmt)
 {
 	struct winsize		argp;
 
@@ -100,5 +100,4 @@ int					formatting(t_files *file, t_op *op, t_format *fmt)
 	if (fmt->nb_list % fmt->count)
 		++fmt->row;
 	print_files(file, fmt, op);
-	return (fmt->count);
 }

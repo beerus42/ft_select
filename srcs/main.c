@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:47:04 by liton             #+#    #+#             */
-/*   Updated: 2017/09/09 21:56:18 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/11 01:30:26 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ static t_op		*init_op(void)
 
 static void		ft_select(t_files *file, t_op *op, t_format *fmt)
 {
-	int			count;
 	t_files		*begin;
 
 	begin = file;
 	tputs(op->clear, 0, my_putchar);
+	ft_signal();
 	while (42)
 	{
 		tputs(tgoto(op->cm, 0, 0), 0, my_putchar);
-		count = formatting(begin, op, fmt);
-		read_buff(&file, &begin, count);
+		formatting(begin, op, fmt);
+		read_buff(&file, &begin, fmt->count);
 	}
 }
 
@@ -82,16 +82,13 @@ int				main(int ac, char **av, char **env)
 	char				*term_name;
 	t_op				*op;
 
-	(void)av;
-	(void)env;
-	if (!*env ||ac < 2 || (term_name = getenv("TERM")) == NULL)
+	if (!*env || ac < 2 || (term_name = getenv("TERM")) == NULL)
 		return (-1);
-	if (tgetent(NULL, term_name) <= 0)
-		return (-1);
-	if ((op = init_op()) == NULL)
+	if (tgetent(NULL, term_name) <= 0 || (op = init_op()) == NULL)
 		return (-1);
 	file = parsing(av);
 	fmt = name_size(file);
 	shell_off();
 	ft_select(file, op, fmt);
+	free(fmt);
 }

@@ -6,13 +6,13 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/14 20:24:52 by liton             #+#    #+#              #
-#*   Updated: 2017/09/08 18:42:51 by liton            ###   ########.fr       *#
+#*   Updated: 2017/09/10 04:45:09 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = 	ft_select
 CC      = 	gcc
-LFLAGS  = 	-lncurses
+LFLAGS  = 	-ltermcap
 FLAGS   = 	-Wall -Wextra -Werror
 LIB     = 	libft/libft.a
 HEADER  = 	includes/
@@ -23,6 +23,7 @@ SRC	=		formatting.c		\
 			parsing.c			\
 			read.c				\
 			name_size.c      	\
+			signal.c			\
 			main.c
 # colors
 GRN     =   \033[0;32m

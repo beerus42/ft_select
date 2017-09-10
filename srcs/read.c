@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:33:33 by liton             #+#    #+#             */
-/*   Updated: 2017/09/09 22:09:21 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/10 06:42:00 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void		select_mode(t_files **file)
 		(*file)->reverse = 0;
 	*file = (*file)->next;
 	(*file)->cursor = 1;
-
 }
 
 static void		delete_mode(t_files **file, t_files **begin)
@@ -56,8 +55,6 @@ static void		up(t_files **file, int count)
 	t_files		*tmp;
 	int			cnt;
 
-	if ((*file)->first == 1)
-		return ;
 	cnt = 0;
 	tmp = *file;
 	while (cnt < count)
