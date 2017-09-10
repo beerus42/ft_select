@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/10 06:47:11 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/11 01:34:51 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct		s_format
 }					t_format;
 
 void				formatting(t_files *file, t_op *op, t_format *fmt);
-int					my_putchar(int c);
 t_files				*parsing(char **av);
 void				read_buff(t_files **file, t_files **begin, int count);
 void				delete_file(t_files **file, t_files **begin);
