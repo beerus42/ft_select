@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:47:04 by liton             #+#    #+#             */
-/*   Updated: 2017/09/11 01:33:38 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/14 21:08:31 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,35 +60,30 @@ static t_op		*init_op(void)
 	return (op);
 }
 
-static void		ft_select(t_files *file, t_op *op, t_format *fmt)
+static void		ft_select(t_global *global)
 {
-	t_files		*begin;
-
-	begin = file;
-	tputs(op->clear, 0, my_putchar);
+	tputs(global->op->clear, 0, my_putchar);
 	ft_signal();
 	while (42)
 	{
-		tputs(tgoto(op->cm, 0, 0), 0, my_putchar);
-		formatting(begin, op, fmt);
-		read_buff(&file, &begin, fmt->count);
+		tputs(tgoto(global->op->cm, 0, 0), 0, my_putchar);
+		formatting();
+		read_buff();
 	}
 }
 
 int				main(int ac, char **av, char **env)
 {
-	t_format			*fmt;
-	t_files				*file;
 	char				*term_name;
-	t_op				*op;
 
+	if (!(global = (t_global*)malloc(sizeof(t_global))))
+		return (-1);
 	if (!*env || ac < 2 || (term_name = getenv("TERM")) == NULL)
 		return (-1);
-	if (tgetent(NULL, term_name) <= 0 || (op = init_op()) == NULL)
+	if (tgetent(NULL, term_name) <= 0 || (global->op = init_op()) == NULL)
 		return (-1);
-	file = parsing(av);
-	fmt = name_size(file);
+	global->file = parsing(av);
+	global->fmt = name_size(global->file);
 	shell_off();
-	ft_select(file, op, fmt);
-	free(fmt);
+	ft_select(global);
 }

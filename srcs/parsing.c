@@ -6,19 +6,16 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:37:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/10 01:47:13 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/14 21:48:28 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void				delete_file(t_files **file, t_files **begin)
+void				delete_file(t_files **file)
 {
 	if ((*file)->first == 1)
-	{
 		(*file)->next->first = 1;
-		*begin = (*file)->next;
-	}
 	(*file)->prev->next = (*file)->next;
 	(*file)->next->prev = (*file)->prev;
 	ft_strdel(&(*file)->name);

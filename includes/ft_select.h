@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/11 01:34:51 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/14 21:50:42 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,19 @@ typedef struct		s_format
 	int				word_max;
 }					t_format;
 
-void				formatting(t_files *file, t_op *op, t_format *fmt);
+typedef struct		s_global
+{
+	struct s_files   *file;
+	struct s_format  *fmt;
+	struct s_op		 *op;
+}					t_global;
+
+struct s_global		*global;
+
+void				formatting(void);
 t_files				*parsing(char **av);
-void				read_buff(t_files **file, t_files **begin, int count);
-void				delete_file(t_files **file, t_files **begin);
+void				read_buff(void);
+void				delete_file(t_files **file);
 t_format			*name_size(t_files *file);
 void				ft_signal(void);
 
