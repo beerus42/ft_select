@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:47:04 by liton             #+#    #+#             */
-/*   Updated: 2017/09/15 04:07:41 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/15 04:18:56 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int				main(int ac, char **av, char **env)
 	if (tgetent(NULL, term_name) <= 0 || (global->op = init_op()) == NULL)
 		return (-1);
 	global->file = parsing(av);
-	global->fmt = name_size(global->file);
+	global->fmt = name_size();
 	shell_on();
 	ft_signal();
 	ft_select();
