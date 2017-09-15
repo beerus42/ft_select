@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/14 21:50:42 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/15 04:09:14 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void				formatting(void);
 t_files				*parsing(char **av);
 void				read_buff(void);
 void				delete_file(t_files **file);
-t_format			*name_size(t_files *file);
+t_format			*name_size(void);
 void				ft_signal(void);
+int					shell_off(void);
 
 #endif

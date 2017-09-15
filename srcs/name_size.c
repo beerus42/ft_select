@@ -6,13 +6,13 @@
 /*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 18:16:16 by liton             #+#    #+#             */
-/*   Updated: 2017/09/10 01:43:41 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/15 04:08:45 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-t_format	*name_size(t_files *file)
+t_format	*name_size(void)
 {
 	int				save;
 	int				exit;
@@ -30,10 +30,10 @@ t_format	*name_size(t_files *file)
 	while (exit != 0)
 	{
 		++fmt->nbl_save;
-		if ((save = ft_strlen(file->name)) > fmt->len_max)
+		if ((save = ft_strlen(global->file->name)) > fmt->len_max)
 			fmt->len_max = save;
-		file = file->next;
-		if (file->first == 1)
+		global->file = global->file->next;
+		if (global->file->first == 1)
 			exit = 0;
 	}
 	fmt->word_max = fmt->len_max;

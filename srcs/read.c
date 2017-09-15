@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:33:33 by liton             #+#    #+#             */
-/*   Updated: 2017/09/14 21:50:32 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/15 04:10:24 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ void			read_buff(void)
 {
 	char	buff[3 + 1];
 
+	read(0, buff, 3);
 	while (global->file->cursor != 1)
 		global->file = global->file->next;
-	read(0, buff, 3);
 	if (buff[2] == 67)
 		right();
 	else if (buff[2] == 68)
