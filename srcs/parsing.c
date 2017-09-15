@@ -6,21 +6,44 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:37:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/14 21:48:28 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/15 23:48:01 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
+void             right(void)
+{
+        global->file->cursor = 0;
+        global->file = global->file->next;
+        global->file->cursor = 1;
+}
+
+void             left(void)
+{
+        global->file->cursor = 0;
+        global->file = global->file->prev;
+        global->file->cursor = 1;
+}
+
 void				delete_file(t_files **file)
 {
+	int		p;
+
+	p = 0;
 	if ((*file)->first == 1)
+	{
+		if ((*file)->next->first == 1)
+			p = 1;;
 		(*file)->next->first = 1;
+	}
 	(*file)->prev->next = (*file)->next;
 	(*file)->next->prev = (*file)->prev;
 	ft_strdel(&(*file)->name);
 	free(*file);
 	file = NULL;
+	if (p == 1)
+		sig_op(3);
 }
 
 static t_files		*create_files(t_files *file, char *name)

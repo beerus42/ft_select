@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/15 04:09:14 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 00:43:45 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ typedef struct		s_format
 	int				row;
 	int				count;
 	int				nb_list;
-	int				nbl_save;
 	int				len_max;
 	int				word_max;
+	int				nbl_save;
 }					t_format;
 
 typedef struct		s_global
 {
+	struct termios   term;
 	struct s_files   *file;
 	struct s_format  *fmt;
 	struct s_op		 *op;
@@ -65,8 +66,11 @@ void				formatting(void);
 t_files				*parsing(char **av);
 void				read_buff(void);
 void				delete_file(t_files **file);
-t_format			*name_size(void);
 void				ft_signal(void);
+int					shell_on(void);
+void				sig_op(int sig);
+void				right(void);
+void				left(void);
 int					shell_off(void);
 
 #endif

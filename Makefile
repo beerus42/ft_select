@@ -6,7 +6,7 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/14 20:24:52 by liton             #+#    #+#              #
-#*   Updated: 2017/09/10 04:45:09 by liton            ###   ########.fr       *#
+#*   Updated: 2017/09/15 23:43:51 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ OBJDIR  = 	objs/
 SRC	=		formatting.c		\
 			parsing.c			\
 			read.c				\
-			name_size.c      	\
 			signal.c			\
 			main.c
 # colors

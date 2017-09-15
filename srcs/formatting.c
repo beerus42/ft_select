@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/15 03:13:51 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 01:41:37 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,17 @@ void				formatting(void)
 	ioctl(1, TIOCGWINSZ, &argp);
 	nb_list();
 	global->fmt->count = argp.ws_col / global->fmt->len_max;
+	if (global->fmt->count == 0)
+	{
+		ft_putendl_fd("Enlarge horizontally.", 2);
+		return ;
+	}
 	global->fmt->row = global->fmt->nb_list / global->fmt->count;
+	if (global->fmt->row + 1 >= argp.ws_row)
+	{
+		ft_putendl_fd("Enlarge verticaly.", 2);
+		return ;
+	}
 	if (global->fmt->nb_list % global->fmt->count)
 		++global->fmt->row;
 	print_files();

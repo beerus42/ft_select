@@ -6,25 +6,11 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:33:33 by liton             #+#    #+#             */
-/*   Updated: 2017/09/15 04:10:24 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 01:41:19 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-static void		right(void)
-{
-	global->file->cursor = 0;
-	global->file = global->file->next;
-	global->file->cursor = 1;
-}
-
-static void		left(void)
-{
-	global->file->cursor = 0;
-	global->file = global->file->prev;
-	global->file->cursor = 1;
-}
 
 static void		select_mode(void)
 {
@@ -88,6 +74,13 @@ static void		down(void)
 	global->file->cursor = 1;
 }
 
+void			enter()
+{
+	shell_off();
+	ft_putstr_fd("Makefile", STDOUT_FILENO);
+	exit(0);
+}
+
 void			read_buff(void)
 {
 	char	buff[3 + 1];
@@ -107,4 +100,8 @@ void			read_buff(void)
 		up();
 	else if (buff[2] == 66)
 		down();
+	else if (buff[0] == 10)
+		enter();
+	else if (buff[1] == 0)
+		sig_op(3);
 }

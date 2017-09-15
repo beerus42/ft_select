@@ -6,41 +6,39 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:47:04 by liton             #+#    #+#             */
-/*   Updated: 2017/09/15 04:18:56 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 01:38:40 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		shell_off(void)
+static t_format        *name_size(void)
 {
-	struct termios term;
- 
-	if (tcgetattr(0, &term) == -1)
-  	 return (-1);
-	term.c_lflag = (ICANON | ECHO);
-	if (tcsetattr(0, 0, &term) == -1)
-	   return (-1);
-	if (tputs(tgetstr("vs", NULL), 0, my_putchar) == ERR)
-		return (-1);
-	return (0);
-}
+        int                             save;
+        int                             exit;
+        t_format                *fmt;
 
-static int		shell_on(void)
-{
-	struct termios		term;
-
-	if (tcgetattr(0, &term) == -1)
-    	return (-1);
-	term.c_lflag &= ~(ICANON); 
-	term.c_lflag &= ~(ECHO);
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, TCSADRAIN, &term) == -1)
-		return (-1);
-	if (tputs(tgetstr("vi", NULL), 0, my_putchar) == ERR)
-		return (-1);
-	return(0);
+        exit = 1;
+        if (!(fmt = (t_format*)malloc(sizeof(t_format))))
+                return (NULL);
+        fmt->count = 0;
+        fmt->row = 0;
+        fmt->nb_list = 0;
+        fmt->len_max = 0;
+        fmt->word_max = 0;
+        fmt->nbl_save = 0;
+        while (exit != 0)
+        {
+                ++fmt->nbl_save;
+                if ((save = ft_strlen(global->file->name)) > fmt->len_max)
+                        fmt->len_max = save;
+                global->file = global->file->next;
+                if (global->file->first == 1)
+                        exit = 0;
+        }
+        fmt->word_max = fmt->len_max;
+        fmt->len_max += 3;
+        return (fmt);
 }
 
 static t_op		*init_op(void)
@@ -84,6 +82,8 @@ int				main(int ac, char **av, char **env)
 	if (!*env || ac < 2 || (term_name = getenv("TERM")) == NULL)
 		return (-1);
 	if (tgetent(NULL, term_name) <= 0 || (global->op = init_op()) == NULL)
+		return (-1);
+	if (tcgetattr(0, &global->term) == -1)
 		return (-1);
 	global->file = parsing(av);
 	global->fmt = name_size();
