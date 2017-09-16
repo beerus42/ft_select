@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 19:48:57 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 20:28:15 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ typedef struct		s_format
 
 typedef struct		s_global
 {
-	struct termios   term;
-	struct s_files   *file;
-	struct s_format  *fmt;
-	struct s_op		 *op;
+	struct termios	term;
+	struct s_files	*file;
+	struct s_format	*fmt;
+	struct s_op		*op;
 }					t_global;
 
 struct s_global		*global;
