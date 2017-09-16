@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 03:13:06 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 19:53:02 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 20:26:54 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			sig_op(int sig)
 	else if (sig == SIGTSTP || sig == SIGSTOP)
 	{
 		susp[0] = global->term.c_cc[VSUSP];
-		susp[1] = 0;
+		susp[1] = '\0';
 		shell_off();
 		signal(SIGTSTP, SIG_DFL);
 		ioctl(2, TIOCSTI, susp);
