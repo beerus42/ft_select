@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 01:52:32 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 04:37:27 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,18 @@ void				formatting(void)
 
 	while (global->file && global->file->first != 1)
 		global->file = global->file->next;
-	ioctl(1, TIOCGWINSZ, &argp);
+	ioctl(0, TIOCGWINSZ, &argp);
 	nb_list();
 	global->fmt->count = argp.ws_col / global->fmt->len_max;
 	if (global->fmt->count == 0)
 	{
-		ft_putendl_fd("Enlarge horizontally.", 2);
+		ft_putendl_fd("Enlarge the window.", 2);
 		return ;
 	}
 	global->fmt->row = global->fmt->nb_list / global->fmt->count;
 	if (global->fmt->row + 1 >= argp.ws_row)
 	{
-		ft_putendl_fd("Enlarge verticaly.", 2);
+		ft_putendl_fd("Enlarge the window.", 2);
 		return ;
 	}
 	if (global->fmt->nb_list % global->fmt->count)
