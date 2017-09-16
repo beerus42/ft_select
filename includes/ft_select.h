@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:05:55 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 04:40:15 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 19:48:57 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,8 @@ void				sig_op(int sig);
 void				right(void);
 void				left(void);
 int					shell_off(void);
+void				enter(void);
+void				free_struct(void);
+void				support_formatting(int count);
 
 #endif

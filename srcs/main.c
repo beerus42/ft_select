@@ -6,17 +6,18 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:47:04 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 04:40:23 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 19:46:09 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static t_format        *name_size(void)
+static t_format			*name_size(void)
 {
 	int			save;
 	int			exit;
 	t_format	*fmt;
+
 	exit = 1;
 	if (!(fmt = (t_format*)malloc(sizeof(t_format))))
 		return (NULL);
@@ -40,7 +41,7 @@ static t_format        *name_size(void)
 	return (fmt);
 }
 
-static t_op		*init_op(void)
+static t_op				*init_op(void)
 {
 	t_op	*op;
 
@@ -61,7 +62,7 @@ static t_op		*init_op(void)
 	return (op);
 }
 
-static void		ft_select(void)
+static void				ft_select(void)
 {
 	tputs(global->op->clear, 0, my_putchar);
 	while (42)
@@ -72,7 +73,7 @@ static void		ft_select(void)
 	}
 }
 
-int				main(int ac, char **av, char **env)
+int						main(int ac, char **av, char **env)
 {
 	char				*term_name;
 

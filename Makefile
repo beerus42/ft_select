@@ -23,6 +23,7 @@ SRC	=		formatting.c		\
 			parsing.c			\
 			read.c				\
 			signal.c			\
+			argument.c			\
 			main.c
 # colors
 GRN     =   \033[0;32m

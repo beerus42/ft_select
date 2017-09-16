@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:33:33 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 01:41:19 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 20:21:48 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,6 @@ static void		down(void)
 	global->file->cursor = 1;
 }
 
-void			enter()
-{
-	shell_off();
-	ft_putstr_fd("Makefile", STDOUT_FILENO);
-	exit(0);
-}
-
 void			read_buff(void)
 {
 	char	buff[3 + 1];
@@ -94,7 +87,8 @@ void			read_buff(void)
 		left();
 	else if (buff[0] == 32)
 		select_mode();
-	else if (buff[0] == 127)
+	else if (buff[0] == 127 || (buff[0] == 27 && buff[1] == 91 &&
+						buff[2] == 51))
 		delete_mode();
 	else if (buff[2] == 65)
 		up();
@@ -102,6 +96,6 @@ void			read_buff(void)
 		down();
 	else if (buff[0] == 10)
 		enter();
-	else if (buff[1] == 0)
+	else if (buff[0] == 27 && buff[1] == 0 && buff[2] == 0)
 		sig_op(3);
 }

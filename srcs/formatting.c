@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 00:57:43 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 15:08:07 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/16 19:48:44 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,51 +42,41 @@ static void			print_name(char *name)
 {
 	if (global->file->reverse == 1)
 		tputs(global->op->reverse_on, 0, my_putchar);
-	ft_putchar_fd('[', 1);
+	ft_putchar_fd('[', 2);
 	if (global->file->cursor == 1)
 		tputs(global->op->under_on, 0, my_putchar);
-	ft_putstr_fd(name, 1);
+	ft_putstr_fd(name, 2);
 	if (global->file->cursor == 1)
 		tputs(global->op->under_off, 0, my_putchar);
-	ft_putchar_fd(']', 1);
+	ft_putchar_fd(']', 2);
 	if (global->file->reverse == 1)
 		tputs(global->op->reverse_off, 0, my_putchar);
-
 }
 
 static void			print_files(void)
 {
-	int		i;
 	int		count;
 	char	name[global->fmt->word_max + 1];
 	int		exit;
 
 	exit = 1;
 	count = 0;
-	i = -1;
 	while (global->file && exit != 0)
 	{
 		nb_space(name);
 		print_name(name);
-		ft_putchar_fd(' ', 1);
+		ft_putchar_fd(' ', 2);
 		++count;
 		if (count == global->fmt->count)
 		{
-			ft_putchar_fd('\n', 1);
+			ft_putchar_fd('\n', 2);
 			count = 0;
 		}
 		global->file = global->file->next;
 		if (global->file->first == 1)
 			exit = 0;
 	}
-	if (global->fmt->nbl_save != global->fmt->nb_list)
-	{
-		while (++i < global->fmt->len_max)
-			ft_putchar_fd(' ', 1);
-		global->fmt->nbl_save = global->fmt->nb_list;
-	}
-	if (count != global->fmt->count && count != 0)
-		ft_putchar_fd('\n', 1);
+	support_formatting(count);
 }
 
 void				formatting(void)
