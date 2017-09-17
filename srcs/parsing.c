@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:37:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/16 20:21:28 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/17 03:04:43 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,7 @@ void				delete_file(t_files **file)
 	if ((*file)->first == 1)
 	{
 		if ((*file)->next->first == 1)
-		{
-			ft_strdel(&global->file->name);
-			free(global->file);
-			free(global->fmt);
-			free(global->op);
-			shell_off();
-			exit(EXIT_SUCCESS);
-		}
+			sig_op(3);
 		(*file)->next->first = 1;
 	}
 	(*file)->prev->next = (*file)->next;
