@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 18:37:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/17 03:04:43 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/17 03:22:21 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 void				right(void)
 {
 	global->file->cursor = 0;
-	global->file = global->file->next;
-	global->file->cursor = 1;
+	global->file->next->cursor = 1;
 }
 
 void				left(void)
 {
 	global->file->cursor = 0;
-	global->file = global->file->prev;
-	global->file->cursor = 1;
+	global->file->prev->cursor = 1;
 }
 
 void				delete_file(t_files **file)
